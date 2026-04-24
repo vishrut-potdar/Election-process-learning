@@ -149,9 +149,17 @@ export default function Simulation() {
     const interval = setInterval(() => {
       t--;
       setVvpatTimer(t);
-      if (t <= 0) {
+    if (t <= 0) {
         clearInterval(interval);
         setShowSlip(false);
+        // Log simulation completion metadata
+        try {
+          addDoc(collection(db, 'simulations'), {
+            timestamp: serverTimestamp(),
+            completed: true,
+            type: 'EVM_SIMULATION'
+          });
+        } catch (e) {}
         setTimeout(() => setStage(SimulationStage.EXIT_INK), 1000);
       }
     }, 1000);
@@ -315,13 +323,14 @@ export default function Simulation() {
                         </div>
                       ))}
 
-                      <button 
-                        onClick={handleBoothStep}
-                        className="w-full mt-8 bg-primary text-white h-16 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/30 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
-                      >
-                         {stepStates.every(s => s) ? "Enter Compartment" : "Next Procedure Step"}
-                         <ArrowRight className="w-5 h-5" />
-                      </button>
+      <button 
+        onClick={handleBoothStep}
+        aria-label={stepStates.every(s => s) ? "Enter Voting Compartment" : "Proceed to Next Procedure Step"}
+        className="w-full mt-8 bg-primary text-white h-16 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/30 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+      >
+         {stepStates.every(s => s) ? "Enter Compartment" : "Next Procedure Step"}
+         <ArrowRight className="w-5 h-5" />
+      </button>
                    </div>
                 </div>
               </motion.div>
@@ -517,6 +526,7 @@ export default function Simulation() {
 
                   <button 
                     onClick={resetSimulation}
+                    aria-label="Restart simulation process"
                     className="flex items-center gap-2 text-primary font-bold mx-auto hover:scale-105 transition-transform"
                   >
                     <RotateCcw className="w-5 h-5" />

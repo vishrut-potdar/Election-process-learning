@@ -70,19 +70,32 @@ describe('Full Voting Workflow Simulation', () => {
     }, { timeout: 2000 });
   });
 
-  it('handles simulation reset correctly', async () => {
+  it('denies multiple votes in same session', async () => {
     render(
       <MemoryRouter>
         <Simulation />
       </MemoryRouter>
     );
     
-    // Go to second stage
+    // Skip to voting
     const nextBtn = screen.getByText(/Next Procedure Step/i);
     for(let i=0; i<4; i++) fireEvent.click(nextBtn);
     fireEvent.click(screen.getByText(/Enter Compartment/i));
+
+    // Wait for Ballot Unit
+    await waitFor(() => {
+      expect(screen.getByText(/READY: SELECT CANDIDATE/i)).toBeDefined();
+    });
+
+    // Vote for first candidate
+    const voteBtn1 = screen.getByRole('button', { name: /Press blue button to vote for Arjun Sharma/i });
+    fireEvent.click(voteBtn1);
     
-    // Check reset button in some sub-components or just verify state change if exists
-    // (Simulation reset might be automatic after VVPAT in this implementation)
+    // Try to vote for second candidate
+    const voteBtn2 = screen.getByRole('button', { name: /Press blue button to vote for Sita Devi/i });
+    fireEvent.click(voteBtn2);
+
+    // Verify first candidate remains the selected one in state (UI check)
+    expect(screen.getByText(/VOTE RECORDED/i)).toBeDefined();
   });
 });

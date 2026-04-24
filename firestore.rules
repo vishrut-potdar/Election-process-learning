@@ -50,5 +50,17 @@ service cloud.firestore {
       allow list, get, delete: if isOwner(resource.data.userId);
       allow update: if false; // Saved resources are immutable once saved
     }
+
+    // Simulations: Publicly writable (logged anonymously) but not readable by users
+    match /simulations/{logId} {
+      function isValidLog(data) {
+        return data.keys().hasAll(['timestamp', 'completed', 'type']) &&
+               data.timestamp == request.time &&
+               data.completed == true &&
+               data.type is string;
+      }
+      allow create: if isValidLog(request.resource.data);
+      allow read, update, delete: if false;
+    }
   }
 }

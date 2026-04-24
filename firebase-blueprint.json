@@ -40,6 +40,17 @@
         "timestamp": { "type": "string", "format": "date-time" }
       },
       "required": ["userId", "resourceId", "resourceType", "title"]
+    },
+    "SimulationLog": {
+      "title": "Simulation Log",
+      "description": "Record of a completed simulation session.",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "format": "date-time" },
+        "completed": { "type": "boolean" },
+        "type": { "type": "string" }
+      },
+      "required": ["timestamp", "completed", "type"]
     }
   },
   "firestore": {
@@ -54,6 +65,10 @@
     "saved_resources": {
       "schema": "SavedResource",
       "description": "Resources saved by individual users."
+    },
+    "simulations": {
+      "schema": "SimulationLog",
+      "description": "Metadata logs for completed voting simulations."
     }
   }
 }
