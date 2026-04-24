@@ -16,15 +16,13 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // Security headers
   app.use(helmet({
-    contentSecurityPolicy: false, // Disable CSP for development or configure strictly
+    contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false
   }));
 
   app.use(express.json());
 
-  // AI API Route (Sensitive logic kept on server)
   app.post('/api/chat', async (req, res) => {
     try {
       const { contents, config } = req.body;
@@ -47,12 +45,10 @@ async function startServer() {
     }
   });
 
-  // Health check
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 
-  // Vite middleware for development
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -60,7 +56,6 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // Serve static files in production
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {

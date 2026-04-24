@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 
-// Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home'));
 const Learn = lazy(() => import('./pages/Learn'));
 const Booth = lazy(() => import('./pages/Booth'));
@@ -19,7 +18,6 @@ const Documentation = lazy(() => import('./pages/Documentation'));
 const VoterGuide = lazy(() => import('./pages/VoterGuide'));
 const MyResources = lazy(() => import('./pages/MyResources'));
 
-// Loading fallback components
 const LoadingFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-surface" aria-busy="true" aria-label="Loading page content">
     <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />

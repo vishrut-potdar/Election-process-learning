@@ -74,9 +74,8 @@ export function AiAssistant() {
       </button>
 
       <AnimatePresence>
-        {isOpen && (
+      {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -86,7 +85,6 @@ export function AiAssistant() {
               aria-hidden="true"
             />
 
-            {/* Side Drawer */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -97,7 +95,6 @@ export function AiAssistant() {
               aria-labelledby="ai-assistant-title"
               className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-[60] flex flex-col border-l border-outline-variant"
             >
-              {/* Header */}
               <div className="relative pt-8 bg-primary">
                 <div className="absolute top-0 left-0 right-0 h-4 bg-white mughal-arch-top -translate-y-px" />
                 <div className="px-6 pb-6 flex justify-between items-center text-white">
@@ -120,8 +117,12 @@ export function AiAssistant() {
                 </div>
               </div>
 
-              {/* Chat Container */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50 ajrakh-watermark" role="log">
+              <div 
+                className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50 ajrakh-watermark" 
+                role="log"
+                aria-live="polite"
+                aria-atomic="false"
+              >
                 {messages.map((msg, idx) => (
                   <div
                     key={idx}

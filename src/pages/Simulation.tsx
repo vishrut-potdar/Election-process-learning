@@ -30,8 +30,6 @@ enum SimulationStage {
   EXIT_INK = 3
 }
 
-// --- Animation Components ---
-
 const SlipAnimation = ({ candidate }: { candidate: Candidate }) => {
   return (
     <motion.div
@@ -70,18 +68,14 @@ const SlipAnimation = ({ candidate }: { candidate: Candidate }) => {
   );
 };
 
-// --- Main Page Component ---
-
 export default function Simulation() {
   const [stage, setStage] = useState<SimulationStage>(SimulationStage.BOOTH_ENTRY);
-  const [stepStates, setStepStates] = useState([true, false, false, false]); // Booth steps
+  const [stepStates, setStepStates] = useState([true, false, false, false]);
   const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
   const [isVoted, setIsVoted] = useState(false);
   const [showSlip, setShowSlip] = useState(false);
   const [vvpatTimer, setVvpatTimer] = useState(7);
   const audioContextRef = useRef<AudioContext | null>(null);
-
-  // --- Handlers ---
 
   const playBeep = () => {
     try {
@@ -105,7 +99,6 @@ export default function Simulation() {
   };
 
   const handleBoothStep = () => {
-    // Small sequence to complete all steps before moving to stage 2
     let nextIdx = stepStates.findIndex(s => !s);
     if (nextIdx === -1) {
       setStage(SimulationStage.CAST_VOTE);
@@ -125,7 +118,6 @@ export default function Simulation() {
     setIsVoted(true);
     playBeep();
 
-    // Log simulation vote to Firestore
     try {
       await addDoc(collection(db, 'votes_simulation'), {
         candidateId: candidate.id.toString(),
@@ -352,7 +344,11 @@ export default function Simulation() {
                      <div className="w-6 h-4 bg-slate-100 rounded-sm flex items-center justify-center text-[8px] font-bold text-slate-800">1</div>
                   </div>
                   
-                  <div className="bg-black/90 p-3 rounded-lg border-2 border-slate-400 mb-6 font-mono overflow-hidden">
+                  <div 
+                    className="bg-black/90 p-3 rounded-lg border-2 border-slate-400 mb-6 font-mono overflow-hidden"
+                    role="status"
+                    aria-live="assertive"
+                  >
                     <p className="text-[10px] text-green-500/80 leading-none mb-1">NAGPUR SOUTH V.S.</p>
                     <p className={cn("text-xs text-green-400 font-bold", isVoted ? "animate-pulse" : "")}>
                        {isVoted ? "VOTE RECORDED - THANK YOU" : "READY: SELECT CANDIDATE"}
@@ -393,7 +389,7 @@ export default function Simulation() {
                               aria-label={`Press blue button to vote for ${c.name}`}
                               title={`Vote for ${c.name}`}
                               className={cn(
-                                "w-6 h-6 rounded-full border-2 transition-all relative",
+                                "w-6 h-6 rounded-full border-2 transition-all relative focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2",
                                 isVoted && selectedCandidate?.id !== c.id && "bg-slate-100 border-slate-200 cursor-not-allowed",
                                 isVoted && selectedCandidate?.id === c.id && "bg-blue-600 border-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.6)]",
                                 !isVoted && "bg-blue-600 border-blue-900 active:scale-95 shadow-md"

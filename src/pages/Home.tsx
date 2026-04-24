@@ -15,7 +15,6 @@ export default function Home() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-24">
-      {/* Hero Section */}
       <section className="relative bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden p-12 md:p-20">
         <div className="mughal-arch-top absolute top-0 left-0 right-0 h-4" />
         <div className="absolute bottom-0 right-0 p-8 opacity-5 select-none ajrakh-watermark w-full h-full pointer-events-none" />
@@ -71,7 +70,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Row */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
           <motion.div
@@ -91,7 +89,6 @@ export default function Home() {
 
       <div className="madhubani-divider" />
 
-      {/* Bento Grid */}
       <section className="grid grid-cols-1 md:grid-cols-12 gap-8">
         <motion.div
           whileHover={{ y: -5 }}
@@ -150,7 +147,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Cards Row */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           { title: "Safety & Myths", desc: "Debunking EVM myths and understanding the secure protocols like the 50-vote Mock Poll.", icon: Shield, color: "primary", link: "/safety" },
