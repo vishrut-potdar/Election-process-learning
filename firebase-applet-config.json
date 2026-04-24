@@ -1,7 +1,7 @@
 {
   "projectId": "matgyaan-e2cf4",
   "appId": "1:4801632138:web:6ecb9040c18254ebf9da73",
-  "apiKey": "AIzaSyDNCxD31mj72cb8gZzmWpB-F_OwmvXxAF8",
+  "apiKey": "USE_ENV_VARIABLE",
   "authDomain": "matgyaan-e2cf4.firebaseapp.com",
   "firestoreDatabaseId": "voter-db",
   "storageBucket": "matgyaan-e2cf4.firebasestorage.app",
