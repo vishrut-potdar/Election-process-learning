@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;900&family=Tiro+Devanagari+Sanskrit&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Tiro Devanagari Sanskrit", serif;
+  
+  --color-primary: #ab3500;
+  --color-primary-container: #ff6b35;
+  --color-surface: #fff8f6;
+  --color-surface-dim: #eed5cd;
+  --color-surface-bright: #fff8f6;
+  --color-on-surface: #261814;
+  --color-on-surface-variant: #594139;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fff1ed;
+  --color-surface-container: #ffe9e3;
+  --color-surface-container-high: #fde3db;
+  --color-surface-container-highest: #f7ddd5;
+  --color-outline: #8d7168;
+  --color-outline-variant: #e1bfb5;
+  --color-secondary: #9e4216;
+  --color-secondary-container: #ff8c5a;
+  --color-tertiary: #056e00;
+  --color-tertiary-container: #44af33;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l5 10 10 5-10 5-5 10-5-10-10-5 10-5 5-10z' fill='%23ab3500' fill-opacity='0.02'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .mughal-arch-top {
+    clip-path: ellipse(100% 100% at 50% 100%);
+    @apply h-3 w-full bg-primary-container;
+  }
+
+  .madhubani-divider {
+    @apply relative h-1 border-y border-primary-container/40 my-6 flex items-center justify-center;
+  }
+
+  .madhubani-divider::after {
+    content: "◆";
+    @apply absolute bg-surface px-3 text-primary-container text-[10px];
+  }
+
+  .ajrakh-watermark {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l5 10 10 5-10 5-5 10-5-10-10-5 10-5 5-10z' fill='%23ab3500' fill-opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* Google Translate Cleanup */
+  #google_translate_element {
+    height: 32px;
+    overflow: hidden;
+  }
+
+  .goog-te-gadget {
+    font-size: 0 !important;
+    color: transparent !important;
+  }
+
+  .goog-te-gadget .goog-te-combo {
+    @apply bg-transparent border-none rounded-none py-0 px-1 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-0 cursor-pointer appearance-none;
+    margin: 0 !important;
+    height: 32px !important;
+    vertical-align: middle !important;
+  }
+
+  /* Hide Google branding */
+  .goog-logo-link, 
+  .goog-te-gadget span {
+    display: none !important;
+  }
+
+  /* Hide the "Select Language" text node */
+  #google_translate_element {
+    color: transparent !important;
+  }
+
+  .google-translate-container {
+    @apply flex items-center h-8;
+  }
+
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+
+  body {
+    top: 0px !important;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Matज्ञान - Bharat Voter Portal",
+  "description": "A comprehensive voter education platform featuring election checklists, booth discovery, safety helplines, and an AI-powered assistant for democratic participation.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "AI Assistant",
+    "Interactive Checklists",
+    "Real-time Booth Discovery"
+  ]
+}
