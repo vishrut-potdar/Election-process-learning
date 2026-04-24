@@ -294,10 +294,14 @@ export default function Simulation() {
                         { label: "Left index finger marked with ink", icon: PenTool },
                         { label: "Voter slip issued", icon: Ticket }
                       ].map((step, i) => (
-                        <div key={i} className={cn(
-                          "flex items-center gap-6 p-5 rounded-2xl border transition-all",
-                          stepStates[i] ? "bg-green-50 border-green-100" : "bg-slate-50 border-slate-100 opacity-60"
-                        )}>
+                        <div 
+                          key={i} 
+                          role="listitem"
+                          aria-label={`${step.label}: ${stepStates[i] ? 'Verified' : 'Pending'}`}
+                          className={cn(
+                            "flex items-center gap-6 p-5 rounded-2xl border transition-all",
+                            stepStates[i] ? "bg-green-50 border-green-100" : "bg-slate-50 border-slate-100 opacity-60"
+                          )}>
                            <div className={cn(
                              "w-10 h-10 rounded-full flex items-center justify-center shrink-0 border-2 transition-all",
                              stepStates[i] ? "bg-green-600 border-green-600 text-white" : "border-slate-300 text-slate-400"
@@ -360,11 +364,13 @@ export default function Simulation() {
                           selectedCandidate?.id === c.id ? "bg-blue-50" : "bg-white",
                           isVoted && "cursor-default"
                         )}
+                        role="group"
+                        aria-label={`Candidate ${c.id}: ${c.name}, ${c.party}`}
                       >
-                         <div className="flex bg-slate-50 items-center justify-center w-6 h-6 text-[10px] border border-slate-100 rounded">
+                         <div className="flex bg-slate-50 items-center justify-center w-6 h-6 text-[10px] border border-slate-100 rounded" aria-hidden="true">
                            {c.id}
                          </div>
-                         <div className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-xl bg-white shrink-0">
+                         <div className="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-xl bg-white shrink-0" aria-hidden="true">
                            {c.symbol}
                          </div>
                          <div className="flex-1 min-w-0">
@@ -375,6 +381,8 @@ export default function Simulation() {
                             <button 
                               onClick={() => handleVote(c)}
                               disabled={isVoted}
+                              aria-label={`Press blue button to vote for ${c.name}`}
+                              title={`Vote for ${c.name}`}
                               className={cn(
                                 "w-6 h-6 rounded-full border-2 transition-all relative",
                                 isVoted && selectedCandidate?.id !== c.id && "bg-slate-100 border-slate-200 cursor-not-allowed",

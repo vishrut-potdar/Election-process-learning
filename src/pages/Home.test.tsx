@@ -16,6 +16,16 @@ describe('Home Page', () => {
     expect(screen.getByText(/Bharat's Tomorrow/i)).toBeDefined();
   });
 
+  it('renders stats section', () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+    expect(screen.getByText(/900M\+/i)).toBeDefined();
+    expect(screen.getByText(/Registered Voters/i)).toBeDefined();
+  });
+
   it('contains primary navigation links', () => {
     render(
       <MemoryRouter>

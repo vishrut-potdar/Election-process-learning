@@ -12,7 +12,25 @@ Matज्ञान is a comprehensive, non-partisan voter education platform des
 - **📝 Important Forms**: Quick access and explanations for Voter Registration (Form 6), Corrections (Form 8), and more.
 - **📂 Voter Guide**: A downloadable/viewable comprehensive PDF guide for offline reference.
 
-## 🛠️ Tech Stack
+## 🛠️ Security & Testing Strategy
+
+### **Validation Dashboard**
+- **Automated Workflows**: End-to-end simulation of the voting cycle.
+- **Unit Testing**: Over 15+ test cases covering UI units, state logic, and accessibility roles.
+- **Defensive Praction**: All API keys are sequestered in environment variables; Firestore rules enforce strict attribute-based access control.
+
+### **Running Tests**
+```bash
+npx vitest run
+```
+
+### **Accessibility Compliance**
+The application adheres to WCAG guidelines by implementing:
+- ARIA roles for simulation-specific controls.
+- Screen-reader labels for all graphical EVM elements.
+- High-contrast semantic color pairings.
+
+---
 
 - **Frontend**: React 19, TypeScript, Vite
 - **Styling**: Tailwind CSS (Modern Ajrakh & Mughal-inspired design tokens)
