@@ -2,11 +2,12 @@ import express from 'express';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { GoogleGenAI } from '@google/genai';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
+import dotenv from 'dotenv';
+import { GeminiService } from './src/services/geminiService.ts';
 
 dotenv.config();
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,25 +35,23 @@ async function startServer() {
         return res.status(500).json({ error: 'Server configuration error.' });
       }
 
-      const genAI = new GoogleGenAI({ apiKey });
-      const modelName = config?.model || 'gemini-1.5-flash';
-      
-      const result = await genAI.models.generateContent({
-        model: modelName,
-        contents,
-        config: {
-          systemInstruction: config?.systemInstruction,
-          tools: config?.tools
-        }
+      const gemini = new GeminiService(apiKey, {
+        model: config?.model || 'gemini-1.5-flash',
+        systemInstruction: config?.systemInstruction,
       });
       
-      const responseText = result.text || "I apologize, but I couldn't formulate a response. Please try asking in a different way.";
+      const responseText = await gemini.generateContent(contents);
 
       res.json({ text: responseText });
     } catch (error: any) {
       console.error('Gemini API Error:', error);
       res.status(500).json({ error: 'Failed to generate response from AI.' });
     }
+  });
+
+  // Health check
+  app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 
   // Vite middleware for development
