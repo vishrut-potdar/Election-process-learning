@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, Users, MapPin, CheckCircle, Calendar, BookOpen, Map as MapIcon, Shield, ClipboardCheck, HelpCircle, ChevronRight, MessageCircle, Download } from 'lucide-react';
+import { ArrowRight, Users, MapPin, CheckCircle, Calendar, BookOpen, Map as MapIcon, Shield, ClipboardCheck, HelpCircle, ChevronRight, MessageCircle, Download, FileText } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Home() {
+  const navigate = useNavigate();
   const stats = [
     { label: 'Registered Voters', value: '900M+', icon: Users },
     { label: 'Lok Sabha Seats', value: '543', icon: MapPin },
@@ -119,7 +121,7 @@ export default function Home() {
                 <p className="text-sm text-on-surface-variant leading-relaxed mb-4">Know the valid identity proofs required for voter verification.</p>
               </div>
               <button 
-                onClick={() => window.location.href = '/documentation'}
+                onClick={() => navigate('/documentation')}
                 className="text-[10px] font-black uppercase text-primary tracking-widest flex items-center gap-2 hover:gap-3 transition-all"
               >
                 Check Documents
@@ -139,11 +141,11 @@ export default function Home() {
             <p className="opacity-90 mb-8 leading-relaxed">Get the official last-minute reference guide for a smooth voting experience.</p>
           </div>
           <button 
-            onClick={() => window.open('https://voters.eci.gov.in/', '_blank')}
+            onClick={() => navigate('/guide')}
             className="bg-white text-tertiary px-6 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors"
           >
-            Get PDF Guide
-            <Download className="w-5 h-5" />
+            Voter Guide (PDF)
+            <FileText className="w-5 h-5" />
           </button>
         </motion.div>
       </section>
@@ -151,7 +153,7 @@ export default function Home() {
       {/* Cards Row */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
-          { title: "Know Your Rights", desc: "Understand the electoral code of conduct and voter protection laws in Bharat.", icon: Shield, color: "primary", link: "/learn" },
+          { title: "Safety & Myths", desc: "Debunking EVM myths and understanding the secure protocols like the 50-vote Mock Poll.", icon: Shield, color: "primary", link: "/safety" },
           { title: "Voter Registration Status", desc: "Check your name in the electoral roll or track your registration application.", icon: ClipboardCheck, color: "tertiary", link: "https://electoralsearch.eci.gov.in/" },
           { title: "Help Desk", desc: "24/7 support for registration queries and reporting electoral malpractices.", icon: HelpCircle, color: "secondary", link: "https://mahasec.maharashtra.gov.in/Site/1364/Contact-Us" },
         ].map((card, i) => (
@@ -166,7 +168,7 @@ export default function Home() {
             <h3 className="text-2xl font-serif text-on-surface mb-4">{card.title}</h3>
             <p className="text-on-surface-variant mb-8 leading-relaxed">{card.desc}</p>
             <button 
-              onClick={() => card.link.startsWith('http') ? window.open(card.link, '_blank') : window.location.href = card.link}
+              onClick={() => card.link.startsWith('http') ? window.open(card.link, '_blank') : navigate(card.link)}
               className="text-primary font-bold flex items-center gap-2 group/btn"
             >
               Learn More 

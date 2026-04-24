@@ -7,6 +7,7 @@ export function Navbar() {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Education', path: '/learn' },
+    { name: 'Safety & Myths', path: '/safety' },
     { name: 'Simulation', path: '/simulation' },
     { name: 'Booth Guide', path: '/booth' },
     { name: 'Important Forms', path: '/forms' },

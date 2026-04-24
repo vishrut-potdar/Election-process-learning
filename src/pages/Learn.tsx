@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Search, MapPin, Building2, Users, Info, ChevronRight, CheckCircle2, History, Landmark, Globe, Home as HomeIcon, Star, Map as MapIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Search, MapPin, Building2, Users, Info, ChevronRight, CheckCircle2, History, Landmark, Globe, Home as HomeIcon, Star, Map as MapIcon, BookOpen } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Learn() {
+  const navigate = useNavigate();
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-24">
       {/* Hero Section */}
@@ -60,7 +62,7 @@ export default function Learn() {
             </div>
             
             <button 
-              onClick={() => window.location.href = '/lok-sabha'}
+              onClick={() => navigate('/lok-sabha')}
               className="mt-8 w-full py-4 border-2 border-primary text-primary font-black rounded-2xl hover:bg-primary/5 transition-all uppercase tracking-widest text-xs"
             >
               View Process
@@ -92,7 +94,7 @@ export default function Learn() {
               ))}
             </ul>
             <button 
-              onClick={() => window.location.href = '/rajya-sabha'}
+              onClick={() => navigate('/rajya-sabha')}
               className="mt-10 w-full py-4 border-2 border-primary text-primary font-black rounded-2xl hover:bg-primary/5 transition-all uppercase tracking-widest text-xs"
             >
               View Process
@@ -118,7 +120,7 @@ export default function Learn() {
               State-level governance. Learn how MLAs are elected and their role in framing state laws, managing state finances, and holding the government accountable.
             </p>
             <button 
-              onClick={() => window.location.href = '/vidhan-sabha'}
+              onClick={() => navigate('/vidhan-sabha')}
               className="w-full py-4 border-2 border-primary text-primary font-black rounded-2xl hover:bg-primary/5 transition-all uppercase tracking-widest text-xs"
             >
               View Process
@@ -143,7 +145,7 @@ export default function Learn() {
               The bedrock of democracy. Local self-government elections for villages and cities, addressing grassroots issues directly.
             </p>
             <button 
-              onClick={() => window.location.href = '/local-bodies'}
+              onClick={() => navigate('/local-bodies')}
               className="w-full py-4 border-2 border-tertiary text-tertiary font-black rounded-2xl hover:bg-tertiary/5 transition-all uppercase tracking-widest text-xs"
             >
               View Process
@@ -151,6 +153,75 @@ export default function Learn() {
           </div>
         </div>
       </div>
+
+      {/* Wards & Booths Section */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <MapIcon className="w-6 h-6 text-primary" />
+            </div>
+            <h2 className="text-3xl font-serif text-on-surface">Understanding Wards</h2>
+          </div>
+          <div className="space-y-6 text-on-surface-variant leading-relaxed">
+            <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
+              <h4 className="font-bold text-slate-900 mb-2">How Wards are Created</h4>
+              <p className="text-sm">Wards are small geographical units created within a municipality or panchayat. They are delimited based on population density to ensure equal representation for every citizen. The State Election Commission periodically updates these boundaries.</p>
+            </div>
+            <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
+              <h4 className="font-bold text-slate-900 mb-2">How to Find Your Ward</h4>
+              <p className="text-sm">Your ward number is usually printed on your Voter ID card (EPIC). You can also find it by entering your details on the ECI Voter Portal or using the 'Voter Helpline' app by searching your name in the electoral roll.</p>
+            </div>
+            <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
+              <h4 className="font-bold text-slate-900 mb-2">Finding Your Polling Booth</h4>
+              <p className="text-sm">Once you know your ward, your specific polling booth is assigned based on your residential address. ECI sends 'Voter Information Slips' to registered households before election day, which contains the exact booth location and address.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <BookOpen className="w-6 h-6 text-primary" />
+            </div>
+            <h2 className="text-3xl font-serif text-on-surface">Voting Instructions</h2>
+          </div>
+          <div className="bg-white rounded-[40px] border border-slate-100 shadow-sm overflow-hidden">
+            <div className="p-8 md:p-10 space-y-8">
+              <div className="flex gap-6">
+                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0">1</span>
+                <div>
+                  <h4 className="font-bold text-slate-900">How to Vote</h4>
+                  <p className="text-sm text-on-surface-variant mt-1">Carry your original ID. Polling officers will verify your name, apply indelible ink, and give you a signed slip. You then proceed to the voting compartment.</p>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0">2</span>
+                <div>
+                  <h4 className="font-bold text-slate-900">Selecting Your Candidate</h4>
+                  <p className="text-sm text-on-surface-variant mt-1">On the EVM, find your preferred candidate's name and symbol. Press the blue button next to it. A red light will glow and a long beep will sound.</p>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0">3</span>
+                <div>
+                  <h4 className="font-bold text-slate-900">What to do with the Slip?</h4>
+                  <p className="text-sm text-on-surface-variant mt-1">The paper slip you receive from the first polling officer must be handed over to the third polling officer sitting near the EVM. Do not carry it outside.</p>
+                </div>
+              </div>
+              <div className="pt-4">
+                <button 
+                  onClick={() => navigate('/simulation')}
+                  className="w-full py-4 bg-primary text-white font-black rounded-2xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                >
+                  <Star className="w-5 h-5" />
+                  Try Simulation Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer CTA */}
       <section className="text-center bg-primary/10 rounded-[64px] p-16 md:p-24 relative overflow-hidden border border-primary/20">
@@ -162,7 +233,7 @@ export default function Learn() {
             Knowledge is your first step. Verification is the next. Ensure you are registered for the upcoming elections in your constituency.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6 pt-4">
-            <button className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-container transition-all text-sm uppercase tracking-widest" onClick={() => window.location.href = '/simulation'}>
+            <button className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-container transition-all text-sm uppercase tracking-widest" onClick={() => navigate('/simulation')}>
               Try Voting Simulation
             </button>
             <button className="px-10 py-5 border-2 border-primary text-primary font-black rounded-2xl bg-white/50 hover:bg-white transition-all text-sm uppercase tracking-widest">

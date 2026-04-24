@@ -14,6 +14,7 @@ import VidhanSabha from './pages/VidhanSabha';
 import RajyaSabha from './pages/RajyaSabha';
 import LokSabha from './pages/LokSabha';
 import Documentation from './pages/Documentation';
+import VoterGuide from './pages/VoterGuide';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/rajya-sabha" element={<RajyaSabha />} />
           <Route path="/lok-sabha" element={<LokSabha />} />
           <Route path="/documentation" element={<Documentation />} />
+          <Route path="/guide" element={<VoterGuide />} />
         </Routes>
       </Layout>
     </Router>
