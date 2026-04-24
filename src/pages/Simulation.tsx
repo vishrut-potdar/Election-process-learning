@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, Ticket, ShieldAlert, Landmark, Users, User, ArrowRight, RotateCcw, MapPin, Search, CreditCard, PenTool, ExternalLink, ShieldCheck, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { nanoid } from 'nanoid';
 
 // --- Types & Data ---
 
@@ -116,11 +119,23 @@ export default function Simulation() {
     }
   };
 
-  const handleVote = (candidate: Candidate) => {
+  const handleVote = async (candidate: Candidate) => {
     if (isVoted) return;
     setSelectedCandidate(candidate);
     setIsVoted(true);
     playBeep();
+
+    // Log simulation vote to Firestore
+    try {
+      await addDoc(collection(db, 'votes_simulation'), {
+        candidateId: candidate.id.toString(),
+        candidateName: candidate.name,
+        timestamp: serverTimestamp(),
+        sessionId: nanoid()
+      });
+    } catch (e) {
+      console.warn("Simulation vote log failed (likely permission denied as intended or network)", e);
+    }
 
     // Trigger VVPAT slip after a small mechanical delay
     setTimeout(() => {

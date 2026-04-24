@@ -14,6 +14,7 @@ import {
   Calendar,
   ClipboardList
 } from 'lucide-react';
+import { SaveButton } from '../components/SaveButton';
 
 const forms = [
   {
@@ -109,10 +110,16 @@ export default function ImportantForms() {
                   <div className={`w-14 h-14 bg-${form.color}/10 rounded-2xl flex items-center justify-center text-${form.color}`}>
                     <form.icon className="w-7 h-7" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <span className={`text-${form.color} font-black text-sm uppercase tracking-widest`}>{form.number}</span>
                     <h3 className="text-3xl font-serif text-on-surface">{form.title}</h3>
                   </div>
+                  <SaveButton 
+                    resourceId={form.id} 
+                    resourceType="form" 
+                    title={form.title} 
+                    className="mt-4"
+                  />
                 </div>
 
                 <p className="text-on-surface-variant leading-relaxed text-lg">

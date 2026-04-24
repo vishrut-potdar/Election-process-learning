@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Candidates: Anyone can read, only admin (manually via console for now) can write
+    match /candidates/{candidateId} {
+      allow read: if true;
+      allow write: if false; 
+    }
+
+    // Simulation Votes: Anyone can create (simulate voting), but no one can read or update/delete
+    match /votes_simulation/{voteId} {
+      function isValidVote(data) {
+        return data.keys().hasAll(['candidateId', 'timestamp']) &&
+               data.candidateId is string &&
+               data.timestamp is timestamp;
+      }
+
+      allow create: if isValidVote(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    // Saved Resources: User can only read/write their own data
+    match /saved_resources/{resourceId} {
+      function isOwner(userId) {
+        return isSignedIn() && request.auth.uid == userId;
+      }
+
+      function isValidResource(data) {
+        return data.keys().hasAll(['userId', 'resourceId', 'resourceType', 'title', 'timestamp']) &&
+               data.userId == request.auth.uid &&
+               data.resourceType in ['form', 'article', 'module'] &&
+               data.timestamp == request.time;
+      }
+
+      allow create: if isValidResource(request.resource.data);
+      allow list, get, delete: if isOwner(resource.data.userId);
+      allow update: if false; // Saved resources are immutable once saved
+    }
+  }
+}

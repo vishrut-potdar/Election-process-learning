@@ -1,34 +1,31 @@
-import { GoogleGenAI, GenerativeModel } from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 
 /**
  * Service for interacting with Google Gemini API
  */
 export class GeminiService {
-  private genAI: GoogleGenAI;
-  private model: GenerativeModel;
+  private ai: GoogleGenAI;
 
-  constructor(apiKey: string, config: { model: string, systemInstruction: string }) {
-    this.genAI = new GoogleGenAI(apiKey);
-    this.model = this.genAI.getGenerativeModel({
-      model: config.model,
-      systemInstruction: config.systemInstruction,
-    });
+  constructor(apiKey: string) {
+    this.ai = new GoogleGenAI({ apiKey });
   }
 
-  async generateContent(contents: any[]) {
-    const generationConfig = {
+  async generateContent(contents: any, tools?: any[]) {
+    const config = {
       temperature: 0.7,
       topP: 0.8,
       topK: 40,
-      maxOutputTokens: 2048,
     };
 
-    const result = await this.model.generateContent({
+    const response = await this.ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
       contents,
-      generationConfig,
+      config: {
+        ...config,
+        tools: tools,
+      }
     });
 
-    const response = await result.response;
-    return response.text();
+    return response.text;
   }
 }

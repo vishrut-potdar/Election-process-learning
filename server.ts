@@ -35,12 +35,10 @@ async function startServer() {
         return res.status(500).json({ error: 'Server configuration error.' });
       }
 
-      const gemini = new GeminiService(apiKey, {
-        model: config?.model || 'gemini-1.5-flash',
-        systemInstruction: config?.systemInstruction,
-      });
+      const gemini = new GeminiService(apiKey);
       
-      const responseText = await gemini.generateContent(contents);
+      const tools = [{ googleSearch: {} }];
+      const responseText = await gemini.generateContent(contents, tools);
 
       res.json({ text: responseText });
     } catch (error: any) {

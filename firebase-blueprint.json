@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "Candidate": {
+      "title": "Candidate",
+      "description": "An electoral candidate contesting in an election.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Candidate ID" },
+        "name": { "type": "string", "description": "English name" },
+        "nameHindi": { "type": "string", "description": "Hindi name" },
+        "party": { "type": "string", "description": "Political party name" },
+        "symbol": { "type": "string", "description": "Emoji or icon symbol" },
+        "education": { "type": "string" },
+        "manifesto": { "type": "string" },
+        "assets": { "type": "string" },
+        "criminalRecords": { "type": "string" }
+      },
+      "required": ["id", "name", "party", "symbol"]
+    },
+    "Vote": {
+      "title": "Vote",
+      "description": "A recorded vote (anonymized in real systems, but logged for simulation here).",
+      "type": "object",
+      "properties": {
+        "candidateId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "voterId": { "type": "string", "description": "Anonymous ID for tracking session" }
+      },
+      "required": ["candidateId", "timestamp"]
+    },
+    "SavedResource": {
+      "title": "Saved Resource",
+      "description": "Information or form saved by a user for later reference.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "resourceId": { "type": "string" },
+        "resourceType": { "type": "string", "enum": ["form", "article", "module"] },
+        "title": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "resourceId", "resourceType", "title"]
+    }
+  },
+  "firestore": {
+    "candidates": {
+      "schema": "Candidate",
+      "description": "Collection of official candidates."
+    },
+    "votes_simulation": {
+      "schema": "Vote",
+      "description": "Collection of votes cast during the interactive simulation."
+    },
+    "saved_resources": {
+      "schema": "SavedResource",
+      "description": "Resources saved by individual users."
+    }
+  }
+}

@@ -17,6 +17,7 @@ const RajyaSabha = lazy(() => import('./pages/RajyaSabha'));
 const LokSabha = lazy(() => import('./pages/LokSabha'));
 const Documentation = lazy(() => import('./pages/Documentation'));
 const VoterGuide = lazy(() => import('./pages/VoterGuide'));
+const MyResources = lazy(() => import('./pages/MyResources'));
 
 // Loading fallback components
 const LoadingFallback = () => (
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/lok-sabha" element={<LokSabha />} />
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/guide" element={<VoterGuide />} />
+            <Route path="/vault" element={<MyResources />} />
           </Routes>
         </Suspense>
       </Layout>
