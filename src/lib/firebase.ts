@@ -1,36 +1,17 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import configJson from '../../firebase-applet-config.json';
-
-const metaEnv = (import.meta as any).env || {};
-
 const firebaseConfig = {
-  apiKey: metaEnv.VITE_FIREBASE_API_KEY || configJson.apiKey,
-  authDomain: metaEnv.VITE_FIREBASE_AUTH_DOMAIN || configJson.authDomain,
-  projectId: metaEnv.VITE_FIREBASE_PROJECT_ID || configJson.projectId,
-  storageBucket: metaEnv.VITE_FIREBASE_STORAGE_BUCKET || configJson.storageBucket,
-  messagingSenderId: metaEnv.VITE_FIREBASE_MESSAGING_SENDER_ID || configJson.messagingSenderId,
-  appId: metaEnv.VITE_FIREBASE_APP_ID || configJson.appId,
-  databaseId: (metaEnv.VITE_FIREBASE_DATABASE_ID || configJson.firestoreDatabaseId) as string
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  databaseId: import.meta.env.VITE_FIREBASE_DATABASE_ID || 'default'
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app, firebaseConfig.databaseId);
 export const auth = getAuth(app);
 
-async function testConnection() {
-  try {
-    await getDocFromServer(doc(db, 'system_test', 'connectivity'));
-  } catch (error: any) {
-    if (error.code === 'permission-denied' || error.message?.includes('permission-denied')) {
-      // Intentional
-    } else if (error.message?.includes('the client is offline')) {
-      console.warn('Firebase: Client is currently offline.');
-    } else {
-      console.error('Firebase configuration error:', error);
-    }
-  }
-}
-
-testConnection();
